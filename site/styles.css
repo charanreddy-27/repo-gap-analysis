@@ -356,6 +356,79 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; }
 
+/* ---------- hero grid + facts panel ----------
+   The hero headline never fills the container on its own, so the space beside
+   it carries a compact panel of verifiable facts rather than sitting empty. */
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
+  gap: 32px 56px;
+  align-items: center;
+}
+@media (max-width: 940px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  padding: 20px 22px;
+}
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 0 0 14px;
+}
+.panel-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.spec { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 11px 20px; }
+.spec dt {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding-top: 2px;
+  white-space: nowrap;
+}
+.spec dd { margin: 0; font-size: 14.5px; color: var(--ink); overflow-wrap: anywhere; }
+.spec dd .sub { display: block; color: var(--muted); font-size: 13px; margin-top: 1px; }
+.spec dd code, .spec dd .mono-v { font-family: var(--mono); font-size: 13px; color: var(--accent-ink); }
+@media (max-width: 460px) {
+  .spec { grid-template-columns: 1fr; gap: 3px; }
+  .spec dt { padding-top: 8px; }
+}
+
+/* verdict ratio — the product's whole argument in one bar */
+.vbar {
+  display: flex;
+  height: 9px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--ground-2);
+  margin: 4px 0 12px;
+}
+.vbar i { display: block; height: 100%; }
+.vbar .is-adopt { background: var(--permit); }
+.vbar .is-skip { background: var(--faint); opacity: 0.55; }
+
+.vkey { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--mono); font-size: 12px; }
+.vkey span { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); }
+.vkey i { width: 9px; height: 9px; border-radius: 2px; flex: 0 0 auto; }
+.vkey b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
 /* ---------- buttons ---------- */
 .btn {
   display: inline-flex;

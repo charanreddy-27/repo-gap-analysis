@@ -57,16 +57,36 @@
 <main id="main">
 
   <section class="hero">
-    <div class="wrap">
-      <div class="col">
+    <div class="wrap hero-grid">
+      <div>
         <p class="eyebrow">The build</p>
         <h1 style="font-family: var(--mono); font-size: clamp(30px, 5.4vw, 48px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.08; margin-bottom: 20px;">
           Why this exists
         </h1>
-        <p class="hero-lede" style="margin-bottom: 0;">
+        <p class="hero-lede" style="margin-bottom: 24px;">
           It started as a prompt I kept pasting into a chat window, and became a tool
           the moment I noticed I didn't trust the answers.
         </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/charanreddy-27/repo-gap-analysis">Read the source</a>
+          <a class="btn" href="index.html">See it run</a>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Project vitals</p>
+        <dl class="spec">
+          <dt>Stack</dt>
+          <dd>TypeScript (strict, NodeNext)<span class="sub">Claude Agent SDK · commander · picocolors</span></dd>
+          <dt>Surface</dt>
+          <dd>3 commands<span class="sub">analyze · apply · clean</span></dd>
+          <dt>Tests</dt>
+          <dd>6/6 guard · 16/16 parity<span class="sub">Pure functions — no API key needed</span></dd>
+          <dt>Runtime deps</dt>
+          <dd><span class="mono-v">3</span></dd>
+          <dt>Licence</dt>
+          <dd>MIT</dd>
+        </dl>
       </div>
     </div>
   </section>

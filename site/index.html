@@ -58,16 +58,39 @@
 
   <!-- ================= HERO ================= -->
   <section class="hero">
-    <div class="wrap">
-      <span class="hero-tag"><span class="dot"></span>Built on the Claude Agent SDK</span>
-      <h1>The agent that<br />says <span class="accent">skip</span>.</h1>
-      <p class="hero-lede">
-        Point it at your repo and a repo you admire. It reads both, tells you the few things
-        actually worth copying, and implements the ones you approve — one commit each.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/charanreddy-27/repo-gap-analysis">View on GitHub</a>
-        <a class="btn" href="about-project.html">How it was built</a>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="hero-tag"><span class="dot"></span>Built on the Claude Agent SDK</span>
+        <h1>The agent that<br />says <span class="accent">skip</span>.</h1>
+        <p class="hero-lede">
+          Point it at your repo and a repo you admire. It reads both, tells you the few things
+          actually worth copying, and implements the ones you approve — one commit each.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/charanreddy-27/repo-gap-analysis">View on GitHub</a>
+          <a class="btn" href="about-project.html">How it was built</a>
+        </div>
+      </div>
+
+      <!-- The verdict split from the verified run: the argument in one bar. -->
+      <div class="panel">
+        <p class="panel-title">Verified run · neuroforge</p>
+        <div class="vbar" role="img" aria-label="Six of sixteen findings worth doing, ten marked skip">
+          <i class="is-adopt" style="width: 37.5%;"></i>
+          <i class="is-skip" style="width: 62.5%;"></i>
+        </div>
+        <div class="vkey" style="margin-bottom: 18px;">
+          <span><i style="background: var(--permit);"></i><b>6</b> worth doing</span>
+          <span><i style="background: var(--faint); opacity: 0.55;"></i><b>10</b> marked skip</span>
+        </div>
+        <dl class="spec">
+          <dt>Reference</dt>
+          <dd>tensorflow/playground<span class="sub">Apache-2.0 → port with attribution</span></dd>
+          <dt>Cost</dt>
+          <dd><span class="mono-v">$0.57</span> · 50 turns · 4.5 min</dd>
+          <dt>Rails</dt>
+          <dd>6/6 guard tests · 16/16 browser parity</dd>
+        </dl>
       </div>
     </div>
   </section>
@@ -407,7 +430,7 @@
             <a class="btn" href="https://www.charanreddy.dev">Portfolio</a>
           </div>
           <p class="prose" style="color: var(--muted); font-size: 15.5px;">
-            This is one project. There are eighteen more — and a few jet engines — over at
+            This is one project. The rest of them — and a few jet engines — live at
             <a href="https://www.charanreddy.dev">charanreddy.dev</a>.
           </p>
         </div>

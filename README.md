@@ -184,7 +184,7 @@ that I wrote real-time control code for jet engines at DRDO, where a millisecond
 bug — it's a flameout. That job is why this project's most interesting file is the one that
 stops the agent.
 
-This is one project. There are eighteen more — and a few jet engines — over at
+This is one project. The rest of them — and a few jet engines — live at
 **[charanreddy.dev](https://www.charanreddy.dev)**.
 
 Want to build something, or break something interesting? Let's talk.
