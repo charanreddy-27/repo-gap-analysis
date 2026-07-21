@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    repogap — design system
    Subject: a gate that reads licenses and issues verdicts.
    Register: technical audit report with the terminal cut into it.
@@ -18,7 +18,10 @@
 
   --ink: #e7eef5;
   --muted: #94a6b8;
-  --faint: #5f7386;
+  /* --faint carries eyebrows, table headers and stat labels — small uppercase
+     text, so it is held to the same 4.5:1 bar as body copy, not treated as
+     decorative. Verified against both --ground and --panel. */
+  --faint: #738699;
 
   --accent: #8b8ef0;
   --accent-ink: #a8abf7;
@@ -49,7 +52,7 @@
     --rule-strong: rgba(38, 56, 74, 0.26);
     --ink: #16212b;
     --muted: #4d6377;
-    --faint: #71879b;
+    --faint: #5b7185;
     --accent: #4f52c9;
     --accent-ink: #3f42b5;
     --accent-soft: rgba(79, 82, 201, 0.09);
@@ -70,7 +73,7 @@
   --rule-strong: rgba(146, 166, 186, 0.3);
   --ink: #e7eef5;
   --muted: #94a6b8;
-  --faint: #5f7386;
+  --faint: #738699;
   --accent: #8b8ef0;
   --accent-ink: #a8abf7;
   --accent-soft: rgba(139, 142, 240, 0.12);
@@ -89,7 +92,7 @@
   --rule-strong: rgba(38, 56, 74, 0.26);
   --ink: #16212b;
   --muted: #4d6377;
-  --faint: #71879b;
+  --faint: #5b7185;
   --accent: #4f52c9;
   --accent-ink: #3f42b5;
   --accent-soft: rgba(79, 82, 201, 0.09);
@@ -203,6 +206,10 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
   margin-bottom: 6px;
 }
 
+/* Long unbroken tokens — inline code, file paths, URLs — must break rather
+   than widen their container and scroll the page sideways on narrow screens. */
+.prose, .lede, .card, .report, .steps, .checks { overflow-wrap: anywhere; }
+
 .lede { font-size: 18.5px; color: var(--muted); }
 .prose p { margin: 0 0 18px; }
 .prose p:last-child { margin-bottom: 0; }
@@ -221,7 +228,11 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  /* Wraps rather than overflowing: below ~560px the brand and the nav together
+     exceed the viewport, and an unwrapped flex row would widen the whole
+     document and scroll the page sideways. */
+  flex-wrap: wrap;
+  gap: 4px 16px;
   padding-block: 13px;
 }
 .brand {
@@ -252,6 +263,13 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 .nav a[aria-current="page"] { color: var(--accent-ink); }
 .nav .nav-hide { display: none; }
 @media (min-width: 620px) { .nav .nav-hide { display: inline-block; } }
+
+@media (max-width: 560px) {
+  /* Nav drops to its own row, first link optically aligned with the brand. */
+  .nav { width: 100%; margin-left: -11px; }
+  .nav a { padding-inline: 11px; }
+  .theme-toggle { margin-left: auto; }
+}
 
 .theme-toggle {
   display: grid;
