@@ -155,21 +155,44 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 
 /* ---------- layout primitives ---------- */
 .wrap {
-  width: min(100% - (var(--pad) * 2), 1120px);
+  width: min(100% - (var(--pad) * 2), 1180px);
   margin-inline: auto;
 }
 
-/* The reading column is left-aligned, not centred, so the hero, the terminals
-   and every prose block share one hard left edge — the page reads as a
-   technical document with a consistent margin rather than a stack of
-   independently centred blocks. */
-.col {
-  width: min(100%, var(--col));
-  margin-inline: 0;
+/* Only running prose gets a reading measure. Components — cards, stats, tables,
+   terminals — take the full container width, otherwise the page leaves a dead
+   column down the right-hand side on any desktop screen. */
+.measure { width: min(100%, var(--col)); margin-inline: 0; }
+.measure-wide { width: min(100%, 84ch); margin-inline: 0; }
+
+/* Kept as an alias so older markup keeps working. */
+.col { width: min(100%, var(--col)); margin-inline: 0; }
+
+.section { padding-block: clamp(44px, 5.6vw, 72px); }
+.section + .section { border-top: 1px solid var(--rule); }
+
+/* Section header: heading left, supporting line right. Fills the top of every
+   section instead of trailing off into whitespace. */
+.sec-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 8px 56px;
+  align-items: end;
+  margin-bottom: 30px;
+}
+.sec-head > :last-child { margin-bottom: 2px; }
+@media (max-width: 880px) {
+  .sec-head { grid-template-columns: 1fr; gap: 10px; margin-bottom: 24px; }
 }
 
-.section { padding-block: clamp(56px, 9vw, 96px); }
-.section + .section { border-top: 1px solid var(--rule); }
+/* Two-column body: explanation beside the thing being explained. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+  gap: 28px 48px;
+  align-items: start;
+}
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
 
 .eyebrow {
   font-family: var(--mono);
@@ -545,7 +568,7 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 
 /* full-bleed break-out for terminals inside the report column */
 .bleed {
-  width: min(100% - (var(--pad) * 2), 1120px);
+  width: min(100% - (var(--pad) * 2), 1180px);
   margin-inline: auto;
 }
 
@@ -682,11 +705,17 @@ td code {
 .v-adopt { color: var(--permit); font-family: var(--mono); font-size: 13px; }
 .v-skip { color: var(--faint); font-family: var(--mono); font-size: 13px; }
 
-/* ---------- steps / timeline ---------- */
-.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+/* ---------- steps / timeline ----------
+   Two columns on desktop: the marker and label sit in a fixed left rail, the
+   description runs beside it. Uses the width and keeps line length sane. */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
 .steps li {
   position: relative;
-  padding: 16px 0 16px 30px;
+  display: grid;
+  grid-template-columns: minmax(150px, 210px) minmax(0, 1fr);
+  gap: 4px 36px;
+  align-items: start;
+  padding: 18px 0 18px 30px;
   border-bottom: 1px solid var(--rule);
 }
 .steps li:last-child { border-bottom: 0; }
@@ -694,7 +723,7 @@ td code {
   content: "";
   position: absolute;
   left: 4px;
-  top: 25px;
+  top: 27px;
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -707,10 +736,23 @@ td code {
   text-transform: uppercase;
   color: var(--faint);
   display: block;
-  margin-bottom: 3px;
+  grid-column: 1;
+  padding-top: 2px;
 }
-.steps .what { font-weight: 600; display: block; margin-bottom: 3px; }
-.steps p { margin: 0; color: var(--muted); font-size: 15px; }
+.steps .what {
+  font-weight: 600;
+  display: block;
+  grid-column: 2;
+  grid-row: 1;
+  margin-bottom: 4px;
+}
+.steps p { margin: 0; color: var(--muted); font-size: 15px; grid-column: 2; }
+@media (max-width: 760px) {
+  .steps li { grid-template-columns: 1fr; gap: 3px; }
+  .steps .what, .steps p { grid-column: 1; }
+  .steps .what { grid-row: auto; }
+  .steps .when { margin-bottom: 2px; }
+}
 
 .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
 .checks li { display: flex; gap: 11px; color: var(--muted); font-size: 15.5px; }

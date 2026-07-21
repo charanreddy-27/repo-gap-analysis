@@ -72,7 +72,7 @@
     </div>
   </section>
 
-  <div class="bleed" style="margin-bottom: clamp(56px, 9vw, 96px);">
+  <div class="bleed" style="margin-bottom: clamp(40px, 5vw, 64px);">
     <div class="term">
       <div class="term-bar">
         <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
@@ -88,23 +88,53 @@
   <!-- ================= PROBLEM ================= -->
   <section class="section">
     <div class="wrap">
-      <div class="col prose">
-        <p class="eyebrow">The problem</p>
-        <h2 class="h2">Asking a model to compare two repos gives you a flattering list</h2>
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">The problem</p>
+          <h2 class="h2">Asking a model to compare two repos gives you a flattering list</h2>
+        </div>
         <p class="lede">
           "Look at how project X does it" is good advice and useless instructions.
         </p>
-        <p>
-          The gap between admiring a codebase and knowing which three things to steal from it is
-          a day of reading. The obvious fix is to ask a model. What comes back is an exhaustive,
-          agreeable inventory of everything the reference has and you don't — padded to look
-          thorough, ranked by nothing, with no idea what your project is actually for.
-        </p>
-        <p>
-          And if you then hand an agent write access, you get one enormous commit that touches
-          forty files and nobody can review.
-        </p>
-        <p><strong>repogap is built around fixing both of those.</strong></p>
+      </div>
+
+      <div class="split">
+        <div class="prose">
+          <p>
+            The gap between admiring a codebase and knowing which three things to steal from it
+            is a day of reading. The obvious fix is to ask a model. What comes back is an
+            exhaustive, agreeable inventory of everything the reference has and you don't —
+            padded to look thorough, ranked by nothing, with no idea what your project is for.
+          </p>
+          <p>
+            And if you then hand an agent write access, you get one enormous commit that touches
+            forty files and nobody can review.
+          </p>
+          <p><strong>repogap is built around fixing both of those.</strong></p>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="card">
+            <span class="tag tag-deny">Problem 1</span>
+            <p><strong>Output you can't trust.</strong> Nothing in the request gives the model
+              permission to return less, so the list never shrinks — however small your project is.</p>
+          </div>
+          <div class="card">
+            <span class="tag tag-deny">Problem 2</span>
+            <p><strong>Writes you can't review.</strong> One commit, forty files, some of it work
+              you never asked for. Reviewing costs more than doing it yourself.</p>
+          </div>
+          <div class="card card-gate is-permit">
+            <span class="tag tag-permit">Answer 1</span>
+            <p><strong>Score against a goal.</strong> Benefit is relative to what the repo is
+              <em>for</em>, and anything below the bar is marked Skip with a reason.</p>
+          </div>
+          <div class="card card-gate is-permit">
+            <span class="tag tag-permit">Answer 2</span>
+            <p><strong>One item, one commit.</strong> Planned, approved, implemented and verified
+              individually — never batched.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -112,9 +142,18 @@
   <!-- ================= OUTPUT ================= -->
   <section class="section">
     <div class="wrap">
-      <div class="col prose">
-        <p class="eyebrow">What comes back</p>
-        <h2 class="h2">A report that skips more than it recommends</h2>
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">What comes back</p>
+          <h2 class="h2">A report that skips more than it recommends</h2>
+        </div>
+        <p class="lede">
+          Ten of sixteen findings on the run above were Skips. That's the feature, not a shortfall.
+        </p>
+      </div>
+
+      <div class="split">
+        <div class="prose">
         <p>
           Every finding is scored against a goal you supply. Pass
           <code style="font-family:var(--mono);font-size:0.88em;color:var(--accent-ink)">-g "recruiter-impressive demo"</code>
@@ -123,12 +162,18 @@
           Anything that doesn't clear the bar gets a <strong>Skip</strong> and a one-line reason.
         </p>
         <p>
-          On the run above, ten of sixteen findings were Skips. That is the feature, not a
-          shortfall. A recommendation you can act on is worth more than five you'll scroll past.
+          A recommendation you can act on is worth more than five you'll scroll past. Findings
+          cite the reference file — often the lines — so you can check the model's work instead
+          of taking its word for it.
         </p>
+
+        <div class="stats" style="margin-top: 22px; grid-template-columns: 1fr 1fr;">
+          <div class="stat"><div class="stat-v" style="color: var(--permit);">6</div><div class="stat-k">worth doing</div></div>
+          <div class="stat"><div class="stat-v" style="color: var(--faint);">10</div><div class="stat-k">marked skip</div></div>
+        </div>
       </div>
 
-      <div class="col" style="margin-top: 28px;">
+      <div>
         <div class="report">
           <h4>G-03 — URL state serialization for shareability</h4>
           <dl>
@@ -142,9 +187,10 @@
             <dd><span class="v-adopt">Adopt pattern</span></dd>
           </dl>
         </div>
-        <p style="color: var(--faint); font-size: 13.5px; font-family: var(--mono); margin-top: 12px;">
-          Verbatim from GAP_ANALYSIS.md. Findings cite the reference file — often the lines — so you can go read it yourself.
+        <p style="color: var(--faint); font-size: 13px; font-family: var(--mono); margin: 12px 0 0;">
+          Verbatim from GAP_ANALYSIS.md
         </p>
+      </div>
       </div>
     </div>
   </section>
@@ -152,18 +198,20 @@
   <!-- ================= RAILS ================= -->
   <section class="section">
     <div class="wrap">
-      <div class="col prose">
-        <p class="eyebrow">Why it's safe to run</p>
-        <h2 class="h2">The rails are gates, not requests</h2>
-        <p>
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Why it's safe to run</p>
+          <h2 class="h2">The rails are gates, not requests</h2>
+        </div>
+        <p class="lede">
           Prompts are suggestions. A model that decides your instruction doesn't apply will act
-          accordingly, and you find out afterwards. So the constraints that matter live in a
-          <code style="font-family:var(--mono);font-size:0.88em;color:var(--accent-ink)">canUseTool</code>
+          accordingly, and you find out afterwards — so the constraints that matter live in a
+          <code style="font-family:var(--mono);font-size:0.9em;color:var(--accent-ink)">canUseTool</code>
           interceptor that runs <em>before</em> any tool executes.
         </p>
       </div>
 
-      <div class="col grid" style="margin-top: 30px; grid-template-columns: 1fr;">
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));">
         <div class="card card-gate is-deny">
           <span class="tag tag-deny">Phase 1 · read-only</span>
           <p><strong>Analysis physically cannot write to your repo.</strong> Every <code style="font-family:var(--mono);font-size:0.88em">Write</code> or <code style="font-family:var(--mono);font-size:0.88em">Edit</code> whose path isn't <code style="font-family:var(--mono);font-size:0.88em">GAP_ANALYSIS.md</code> is denied before execution. Bash is narrowed to an allowlist — and checked <em>per chained segment</em>, so <code style="font-family:var(--mono);font-size:0.88em">ls &amp;&amp; npm install x</code> is refused on the second segment. Outright destructive commands are caught earlier, on the raw string, however they're chained.</p>
@@ -245,15 +293,17 @@
   <!-- ================= NUMBERS ================= -->
   <section class="section">
     <div class="wrap">
-      <div class="col prose">
-        <p class="eyebrow">Measured, not estimated</p>
-        <h2 class="h2">One full run, start to finish</h2>
-        <p>
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Measured, not estimated</p>
+          <h2 class="h2">One full run, start to finish</h2>
+        </div>
+        <p class="lede">
           Six focus areas against a small repo. Every run prints its own turn count, duration and
-          cost — so the bill is never a surprise.
+          cost, so the bill is never a surprise.
         </p>
       </div>
-      <div class="col stats" style="margin-top: 26px;">
+      <div class="stats">
         <div class="stat"><div class="stat-v">50</div><div class="stat-k">turns</div></div>
         <div class="stat"><div class="stat-v">4.5<span style="font-size:0.6em"> min</span></div><div class="stat-k">wall clock</div></div>
         <div class="stat"><div class="stat-v">$0.57</div><div class="stat-k">cost</div></div>
@@ -265,11 +315,17 @@
   <!-- ================= HOW ================= -->
   <section class="section">
     <div class="wrap">
-      <div class="col prose">
-        <p class="eyebrow">How it works</p>
-        <h2 class="h2">Two phases, one gate between them</h2>
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">How it works</p>
+          <h2 class="h2">Two phases, one gate between them</h2>
+        </div>
+        <p class="lede">
+          Nothing is implemented until you name item IDs. The report is a proposal, not a plan
+          of record.
+        </p>
       </div>
-      <div class="col" style="margin-top: 24px;">
+      <div>
         <ol class="steps">
           <li>
             <span class="when">Phase 1 · read-only</span>
@@ -299,11 +355,17 @@
   <!-- ================= INSTALL ================= -->
   <section class="section">
     <div class="wrap">
-      <div class="col prose">
-        <p class="eyebrow">Try it</p>
-        <h2 class="h2">Two commands</h2>
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Try it</p>
+          <h2 class="h2">Two commands</h2>
+        </div>
+        <p class="lede">
+          Node 18+, <code style="font-family:var(--mono);font-size:0.9em;color:var(--accent-ink)">git</code>,
+          and Claude Code authentication. Nothing else.
+        </p>
       </div>
-      <div class="col" style="margin-top: 24px;">
+      <div>
         <div class="term">
           <div class="term-bar">
             <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
@@ -318,10 +380,6 @@
 <span class="dim"># plan → approve → implement → verify → commit, per item.</span>
 <span class="cmd">repogap apply G-03 G-08</span></pre>
         </div>
-        <p style="color: var(--muted); font-size: 15px; margin-top: 18px;">
-          Node 18+, <code style="font-family:var(--mono);font-size:0.88em;color:var(--accent-ink)">git</code>,
-          and Claude Code authentication. Nothing else.
-        </p>
       </div>
     </div>
   </section>
@@ -329,19 +387,29 @@
   <!-- ================= CONTACT ================= -->
   <section class="section">
     <div class="wrap">
-      <div class="col">
-        <p class="eyebrow">Contact</p>
-        <h2 class="h2">Have an idea? Let's talk.</h2>
-        <p class="lede" style="margin-bottom: 26px;">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 class="h2">Have an idea? Let's talk.</h2>
+        </div>
+        <p class="lede">
           Want to build something — or break something interesting? I'm around.
         </p>
+      </div>
 
-        <div class="hero-actions" style="margin-bottom: 30px;">
-          <a class="btn btn-primary" href="https://cal.com/charanreddy-27/30min">Book a call</a>
-          <a class="btn" href="mailto:charanreddychanda@gmail.com">Email</a>
-          <a class="btn" href="https://github.com/charanreddy-27">GitHub</a>
-          <a class="btn" href="https://www.linkedin.com/in/chandacharanreddy/">LinkedIn</a>
-          <a class="btn" href="https://www.charanreddy.dev">Portfolio</a>
+      <div class="split">
+        <div>
+          <div class="hero-actions" style="margin-bottom: 26px;">
+            <a class="btn btn-primary" href="https://cal.com/charanreddy-27/30min">Book a call</a>
+            <a class="btn" href="mailto:charanreddychanda@gmail.com">Email</a>
+            <a class="btn" href="https://github.com/charanreddy-27">GitHub</a>
+            <a class="btn" href="https://www.linkedin.com/in/chandacharanreddy/">LinkedIn</a>
+            <a class="btn" href="https://www.charanreddy.dev">Portfolio</a>
+          </div>
+          <p class="prose" style="color: var(--muted); font-size: 15.5px;">
+            This is one project. There are eighteen more — and a few jet engines — over at
+            <a href="https://www.charanreddy.dev">charanreddy.dev</a>.
+          </p>
         </div>
 
         <div class="contact-card">
