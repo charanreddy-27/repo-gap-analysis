@@ -1,0 +1,40 @@
+{
+  "name": "repogap",
+  "version": "0.1.0",
+  "description": "Agent-powered gap analysis: compare your repo against a best-in-class reference, get a prioritized report, apply approved improvements one commit at a time.",
+  "type": "module",
+  "bin": {
+    "repogap": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --test \"test/*.test.js\""
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "gap-analysis",
+    "code-quality",
+    "ai-agent",
+    "claude",
+    "cli"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.0",
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
