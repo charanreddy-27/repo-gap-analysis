@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>repogap — Charan Reddy Chanda</title>
+<meta name="description" content="A CLI that compares your repo against one you admire, tells you the few things actually worth copying, and implements the ones you approve — one commit each. Built on the Claude Agent SDK with enforced permission rails." />
+<link rel="canonical" href="https://repogap.charanreddy.dev/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Charan Reddy Chanda" />
+<meta property="og:title" content="repogap — an agent that audits your repo and says no" />
+<meta property="og:description" content="Compares your repo against a reference, returns a report that skips more than it recommends, then implements approved items one commit at a time." />
+<meta property="og:url" content="https://repogap.charanreddy.dev/" />
+<meta property="og:image" content="https://repogap.charanreddy.dev/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="repogap — an agent that audits your repo and says no" />
+<meta name="twitter:description" content="Compares your repo against a reference, returns a report that skips more than it recommends, then implements approved items one commit at a time." />
+<meta name="twitter:image" content="https://repogap.charanreddy.dev/og.png" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+<script>
+  (function () {
+    var saved = localStorage.getItem("repogap-theme");
+    if (saved) document.documentElement.setAttribute("data-theme", saved);
+  })();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="20" height="20" rx="5" stroke="currentColor" stroke-opacity="0.35" />
+        <path d="M6 11h3.5" stroke="#4caf6d" stroke-width="1.8" stroke-linecap="round" />
+        <path d="M12.5 8.5L16 11l-3.5 2.5" stroke="#8b8ef0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span>repo<em>gap</em></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html" aria-current="page">Overview</a>
+      <a href="about-project.html">The build</a>
+      <a href="about.html">About me</a>
+      <a class="nav-hide" href="https://github.com/charanreddy-27/repo-gap-analysis">GitHub</a>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle colour theme">
+        <svg class="sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round" /></svg>
+        <svg class="moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" stroke-linejoin="round" /></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero-tag"><span class="dot"></span>Built on the Claude Agent SDK</span>
+      <h1>The agent that<br />says <span class="accent">skip</span>.</h1>
+      <p class="hero-lede">
+        Point it at your repo and a repo you admire. It reads both, tells you the few things
+        actually worth copying, and implements the ones you approve — one commit each.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/charanreddy-27/repo-gap-analysis">View on GitHub</a>
+        <a class="btn" href="about-project.html">How it was built</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="bleed" style="margin-bottom: clamp(56px, 9vw, 96px);">
+    <div class="term">
+      <div class="term-bar">
+        <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+        <span class="term-title">repogap analyze — real session, trimmed</span>
+      </div>
+      <pre class="term-body" id="typed" aria-label="Terminal output from a real repogap analysis run"><span class="cmd">repogap analyze -r github.com/tensorflow/playground -C ./neuroforge \
+    -g "recruiter-impressive portfolio demo"</span>
+
+<span class="head">Reference</span>
+  <span class="dim">·</span> Cloning github.com/tensorflow/playground
+  <span class="ok">✓</span> Cloned to /tmp/repogap-reference
+  <span class="ok">✓</span> License: Apache-2.0 <span class="dim">→ port with attribution allowed</span>
+
+<span class="head">Analysis</span>
+  <span class="dim">·</span> Goal: recruiter-impressive portfolio demo
+  <span class="dim">Read    src/nn.js
+  Read    reference/src/nn.ts
+  Grep    localStorage|history.pushState
+  Write   GAP_ANALYSIS.md</span>
+
+<span class="dim">| ID   | Gap                                  | Effort | Benefit | Verdict       |
+| G-03 | URL state serialization              | M      | High    |</span> <span class="ok">Adopt pattern</span> <span class="dim">|
+| G-08 | JSDoc types for vanilla JS           | S      | Low     |</span> <span class="ok">Adopt pattern</span> <span class="dim">|</span>
+
+  <span class="dim">50 turns · 269.0s · $0.5670</span>
+
+<span class="head">Done</span>
+  <span class="ok">✓</span> Report written to neuroforge/GAP_ANALYSIS.md
+  <span class="dim">·</span> Review it, then apply items with: repogap apply G-03<span class="cursor" aria-hidden="true"></span></pre>
+    </div>
+  </div>
+
+  <!-- ================= PROBLEM ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">The problem</p>
+        <h2 class="h2">Asking a model to compare two repos gives you a flattering list</h2>
+        <p class="lede">
+          "Look at how project X does it" is good advice and useless instructions.
+        </p>
+        <p>
+          The gap between admiring a codebase and knowing which three things to steal from it is
+          a day of reading. The obvious fix is to ask a model. What comes back is an exhaustive,
+          agreeable inventory of everything the reference has and you don't — padded to look
+          thorough, ranked by nothing, with no idea what your project is actually for.
+        </p>
+        <p>
+          And if you then hand an agent write access, you get one enormous commit that touches
+          forty files and nobody can review.
+        </p>
+        <p><strong>repogap is built around fixing both of those.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OUTPUT ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">What comes back</p>
+        <h2 class="h2">A report that skips more than it recommends</h2>
+        <p>
+          Every finding is scored against a goal you supply. Pass
+          <code style="font-family:var(--mono);font-size:0.88em;color:var(--accent-ink)">-g "recruiter-impressive demo"</code>
+          and you get a different report than
+          <code style="font-family:var(--mono);font-size:0.88em;color:var(--accent-ink)">-g "production service"</code>.
+          Anything that doesn't clear the bar gets a <strong>Skip</strong> and a one-line reason.
+        </p>
+        <p>
+          On the run above, ten of sixteen findings were Skips. That is the feature, not a
+          shortfall. A recommendation you can act on is worth more than five you'll scroll past.
+        </p>
+      </div>
+
+      <div class="col" style="margin-top: 28px;">
+        <div class="report">
+          <h4>G-03 — URL state serialization for shareability</h4>
+          <dl>
+            <dt>What's missing</dt>
+            <dd>State lives in memory only. No way to bookmark a configuration or share a link to "spiral with 3 hidden layers, Adam, LR=0.01".</dd>
+            <dt>How the reference does it</dt>
+            <dd><code>src/state.ts</code> lines 170–245 deserialize from <code>window.location.hash</code> on load, serialize all controls back to hash on change.</dd>
+            <dt>Benefit for my goal</dt>
+            <dd>High — "Here's the exact setup that solves spiral" becomes a clickable link in a presentation.</dd>
+            <dt>Verdict</dt>
+            <dd><span class="v-adopt">Adopt pattern</span></dd>
+          </dl>
+        </div>
+        <p style="color: var(--faint); font-size: 13.5px; font-family: var(--mono); margin-top: 12px;">
+          Verbatim from GAP_ANALYSIS.md. Findings cite the reference file — often the lines — so you can go read it yourself.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RAILS ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">Why it's safe to run</p>
+        <h2 class="h2">The rails are gates, not requests</h2>
+        <p>
+          Prompts are suggestions. A model that decides your instruction doesn't apply will act
+          accordingly, and you find out afterwards. So the constraints that matter live in a
+          <code style="font-family:var(--mono);font-size:0.88em;color:var(--accent-ink)">canUseTool</code>
+          interceptor that runs <em>before</em> any tool executes.
+        </p>
+      </div>
+
+      <div class="col grid" style="margin-top: 30px; grid-template-columns: 1fr;">
+        <div class="card card-gate is-deny">
+          <span class="tag tag-deny">Phase 1 · read-only</span>
+          <p><strong>Analysis physically cannot write to your repo.</strong> Every <code style="font-family:var(--mono);font-size:0.88em">Write</code> or <code style="font-family:var(--mono);font-size:0.88em">Edit</code> whose path isn't <code style="font-family:var(--mono);font-size:0.88em">GAP_ANALYSIS.md</code> is denied before execution. Bash is narrowed to an allowlist — and checked <em>per chained segment</em>, so <code style="font-family:var(--mono);font-size:0.88em">ls &amp;&amp; rm -rf src</code> is refused on the second segment.</p>
+        </div>
+        <div class="card card-gate is-permit">
+          <span class="tag tag-permit">Before analysis · license</span>
+          <p><strong>The reference's LICENSE is read first.</strong> MIT, Apache or BSD permits porting code with attribution flagged in the report. GPL, AGPL, or <em>no license file at all</em> flips the agent to patterns-only — describe the idea, never reproduce the code. That policy string goes into the system prompt, so the constraint is present for every judgment the model makes.</p>
+        </div>
+        <div class="card card-gate">
+          <span class="tag tag-note">Phase 2 · one item, one commit</span>
+          <p><strong>Nothing lands in a single unreviewable blob.</strong> Each item is planned first and waits for your go, then implemented alone, verified against your existing tests, and committed as <code style="font-family:var(--mono);font-size:0.88em">gap(G-03): …</code>. Writes outside the repo are blocked. <code style="font-family:var(--mono);font-size:0.88em">git push</code>, <code style="font-family:var(--mono);font-size:0.88em">git reset --hard</code> and <code style="font-family:var(--mono);font-size:0.88em">npm publish</code> are blocked in every phase. Nothing leaves your machine.</p>
+        </div>
+      </div>
+
+      <div class="bleed" style="margin-top: 30px;">
+        <div class="term">
+          <div class="term-bar">
+            <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+            <span class="term-title">npm test — the guard suite</span>
+          </div>
+<pre class="term-body"><span class="cmd">npm test</span>
+
+<span class="ok">ok 1</span> phase 1 permits writing only the report file
+<span class="ok">ok 2</span> phase 1 narrows bash to read-only commands
+<span class="ok">ok 3</span> phase 1 inspects every segment of a chained command
+<span class="ok">ok 4</span> phase 2 confines writes to the target repo
+<span class="ok">ok 5</span> phase 2 allows committing but never pushing or rewriting history
+<span class="ok">ok 6</span> denials carry a reason the model can act on
+
+<span class="dim"># pass 6
+# fail 0</span>
+
+<span class="dim">Denials are logged, never silent:</span>
+  <span class="no">⛔ Write</span> <span class="dim">— Phase 1 is read-only. The only writable file is GAP_ANALYSIS.md.</span>
+  <span class="no">⛔ Bash</span>  <span class="dim">— recursive or forced delete</span>
+  <span class="no">⛔ Bash</span>  <span class="dim">— pushing is the user's call, not the agent's</span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NUMBERS ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">Measured, not estimated</p>
+        <h2 class="h2">One full run, start to finish</h2>
+        <p>
+          Six focus areas against a small repo. Every run prints its own turn count, duration and
+          cost — so the bill is never a surprise.
+        </p>
+      </div>
+      <div class="col stats" style="margin-top: 26px;">
+        <div class="stat"><div class="stat-v">50</div><div class="stat-k">turns</div></div>
+        <div class="stat"><div class="stat-v">4.5<span style="font-size:0.6em"> min</span></div><div class="stat-k">wall clock</div></div>
+        <div class="stat"><div class="stat-v">$0.57</div><div class="stat-k">cost</div></div>
+        <div class="stat"><div class="stat-v">10<span style="font-size:0.6em">/16</span></div><div class="stat-k">marked skip</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">How it works</p>
+        <h2 class="h2">Two phases, one gate between them</h2>
+      </div>
+      <div class="col" style="margin-top: 24px;">
+        <ol class="steps">
+          <li>
+            <span class="when">Phase 1 · read-only</span>
+            <span class="what">Clone, classify, analyse</span>
+            <p>The reference is shallow-cloned to your temp directory — never inside the repo being analysed, so it can't end up in your git history. Its licence is classified into a policy, and that policy is injected into the system prompt before the agent reads a single file.</p>
+          </li>
+          <li>
+            <span class="when">Phase 1 · output</span>
+            <span class="what">Write the report, then correct it</span>
+            <p>The agent writes <code style="font-family:var(--mono);font-size:0.88em">GAP_ANALYSIS.md</code>. The programme then rewrites the licence and date lines itself, because those are facts it already knows and shouldn't be trusting a model to carry.</p>
+          </li>
+          <li>
+            <span class="when">Gate</span>
+            <span class="what">You choose</span>
+            <p>Nothing is implemented until you name item IDs. The report is a proposal, not a plan of record.</p>
+          </li>
+          <li>
+            <span class="when">Phase 2 · per item</span>
+            <span class="what">Plan → approve → implement → verify → commit</span>
+            <p>Read-only tools during planning, write access only after you approve. It runs your existing tests, and stops to tell you if an item turns out bigger than its estimate rather than quietly expanding scope.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INSTALL ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">Try it</p>
+        <h2 class="h2">Two commands</h2>
+      </div>
+      <div class="col" style="margin-top: 24px;">
+        <div class="term">
+          <div class="term-bar">
+            <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+            <span class="term-title">install &amp; run</span>
+          </div>
+<pre class="term-body"><span class="cmd">git clone https://github.com/charanreddy-27/repo-gap-analysis</span>
+<span class="cmd">cd repo-gap-analysis &amp;&amp; npm install &amp;&amp; npm run build &amp;&amp; npm link</span>
+
+<span class="dim"># read-only. writes GAP_ANALYSIS.md and nothing else.</span>
+<span class="cmd">repogap analyze -r https://github.com/owner/reference -g "your goal here"</span>
+
+<span class="dim"># plan → approve → implement → verify → commit, per item.</span>
+<span class="cmd">repogap apply G-03 G-08</span></pre>
+        </div>
+        <p style="color: var(--muted); font-size: 15px; margin-top: 18px;">
+          Node 18+, <code style="font-family:var(--mono);font-size:0.88em;color:var(--accent-ink)">git</code>,
+          and Claude Code authentication. Nothing else.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="col">
+        <p class="eyebrow">Contact</p>
+        <h2 class="h2">Have an idea? Let's talk.</h2>
+        <p class="lede" style="margin-bottom: 26px;">
+          Want to build something — or break something interesting? I'm around.
+        </p>
+
+        <div class="hero-actions" style="margin-bottom: 30px;">
+          <a class="btn btn-primary" href="https://cal.com/charanreddy-27/30min">Book a call</a>
+          <a class="btn" href="mailto:charanreddychanda@gmail.com">Email</a>
+          <a class="btn" href="https://github.com/charanreddy-27">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/chandacharanreddy/">LinkedIn</a>
+          <a class="btn" href="https://www.charanreddy.dev">Portfolio</a>
+        </div>
+
+        <div class="contact-card">
+          <form action="mailto:charanreddychanda@gmail.com" method="post" enctype="text/plain">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div>Crafted with intent. <span class="mono" style="color: var(--permit);">Available for new projects.</span></div>
+      <div class="mono" style="margin-top: 4px;">Charan Reddy Chanda · Bangalore</div>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.charanreddy.dev">Portfolio</a>
+      <a href="https://github.com/charanreddy-27">GitHub</a>
+      <a href="https://www.linkedin.com/in/chandacharanreddy/">LinkedIn</a>
+      <a href="https://cal.com/charanreddy-27/30min">Book a call</a>
+      <a href="https://orcid.org/0009-0003-2414-6717">ORCID</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="theme.js"></script>
+</body>
+</html>

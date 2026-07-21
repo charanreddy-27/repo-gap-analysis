@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The build — repogap — Charan Reddy Chanda</title>
+<meta name="description" content="How repogap was built: why permission interceptors beat prompt instructions, how licence policy is derived before analysis, and the two bugs that only surfaced by running it badly." />
+<link rel="canonical" href="https://repogap.charanreddy.dev/about-project.html" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Charan Reddy Chanda" />
+<meta property="og:title" content="The build — repogap" />
+<meta property="og:description" content="Why permission interceptors beat prompt instructions, how licence policy is derived before analysis, and the two bugs that only surfaced by running it badly." />
+<meta property="og:url" content="https://repogap.charanreddy.dev/about-project.html" />
+<meta property="og:image" content="https://repogap.charanreddy.dev/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The build — repogap" />
+<meta name="twitter:description" content="Why permission interceptors beat prompt instructions, how licence policy is derived before analysis, and the two bugs that only surfaced by running it badly." />
+<meta name="twitter:image" content="https://repogap.charanreddy.dev/og.png" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+<script>
+  (function () {
+    var saved = localStorage.getItem("repogap-theme");
+    if (saved) document.documentElement.setAttribute("data-theme", saved);
+  })();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="20" height="20" rx="5" stroke="currentColor" stroke-opacity="0.35" />
+        <path d="M6 11h3.5" stroke="#4caf6d" stroke-width="1.8" stroke-linecap="round" />
+        <path d="M12.5 8.5L16 11l-3.5 2.5" stroke="#8b8ef0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span>repo<em>gap</em></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="about-project.html" aria-current="page">The build</a>
+      <a href="about.html">About me</a>
+      <a class="nav-hide" href="https://github.com/charanreddy-27/repo-gap-analysis">GitHub</a>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle colour theme">
+        <svg class="sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round" /></svg>
+        <svg class="moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" stroke-linejoin="round" /></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="col">
+        <p class="eyebrow">The build</p>
+        <h1 style="font-family: var(--mono); font-size: clamp(30px, 5.4vw, 48px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.08; margin-bottom: 20px;">
+          Why this exists
+        </h1>
+        <p class="hero-lede" style="margin-bottom: 0;">
+          It started as a prompt I kept pasting into a chat window, and became a tool
+          the moment I noticed I didn't trust the answers.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">The itch</p>
+        <p>
+          I had a long spec I'd paste into a chat: <em>compare my repo to this one, tell me what's
+          missing, don't just list everything.</em> It worked, sort of. What came back was always
+          agreeable. Every reference repo apparently had fifteen things mine needed. The list never
+          shrank no matter how small my project was.
+        </p>
+        <p>
+          The second problem was worse. When I let the model actually make the changes, I got one
+          commit touching a dozen files, some of which I hadn't asked for. Reviewing it took longer
+          than doing the work.
+        </p>
+        <p>
+          So the tool got built around the two things the chat window couldn't do:
+          <strong>make the model's "no" trustworthy</strong>, and
+          <strong>make its write access narrow enough that I'd actually run it.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">Timeline</p>
+        <h2 class="h2">Five months, one honest wall</h2>
+      </div>
+      <div class="col" style="margin-top: 26px;">
+        <ol class="steps">
+          <li>
+            <span class="when">March 2026 · Ideation</span>
+            <span class="what">A spec file I kept copy-pasting</span>
+            <p>Wrote <code style="font-family:var(--mono);font-size:0.88em">GAP_ANALYSIS_SPEC.md</code> — a long prompt with ground rules about licences, approval gates and no padding. Used it manually on four of my own repos. It was clearly a tool wearing a document's clothes.</p>
+          </li>
+          <li>
+            <span class="when">April 2026 · Scoping</span>
+            <span class="what">Two phases, hard boundary between them</span>
+            <p>Settled the shape: analysis produces a report and touches nothing; implementation happens later, per item, only after approval. Everything since has been in service of keeping that boundary real.</p>
+          </li>
+          <li>
+            <span class="when">May 2026 · MVP</span>
+            <span class="what">First working run on the Agent SDK</span>
+            <p>Wired up <code style="font-family:var(--mono);font-size:0.88em">query()</code>, streamed the tool calls, got a report out the other end. It worked and I didn't trust it — the read-only rule was still just a sentence in a prompt.</p>
+          </li>
+          <li>
+            <span class="when">June 2026 · Where it got hard</span>
+            <span class="what">The rails had to move out of the prompt</span>
+            <p>This is the part that broke everything and then fixed it. Rewriting the constraints as a <code style="font-family:var(--mono);font-size:0.88em">canUseTool</code> interceptor meant reasoning about tool inputs I didn't control — and I got the first version wrong. A read-only prefix laundered a destructive suffix: <code style="font-family:var(--mono);font-size:0.88em">ls &amp;&amp; rm -rf src</code> sailed through because I checked the command, not its segments. That bug is now test three.</p>
+          </li>
+          <li>
+            <span class="when">June 2026 · Licence policy</span>
+            <span class="what">Reading LICENSE before reading code</span>
+            <p>Realised the agent was happily describing GPL implementations in enough detail to reproduce them. Added classification up front, so the policy is in the system prompt before the first file is opened.</p>
+          </li>
+          <li>
+            <span class="when">July 2026 · Polish &amp; launch</span>
+            <span class="what">Two bugs found by running it badly</span>
+            <p>A starved turn budget produced a thorough exploration and zero output. A finished report came back stamped with a date from the model's training prior. Both fixed — one in the prompt, one in code. Then the docs, the guard suite, and this site.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">Technical decisions</p>
+        <h2 class="h2">The three that mattered</h2>
+      </div>
+
+      <div class="col grid" style="margin-top: 28px; grid-template-columns: 1fr;">
+        <div class="card card-gate is-deny">
+          <h3 class="h3">Constraints as interceptors, not instructions</h3>
+          <p><strong>The problem:</strong> "Phase 1 is read-only" in a system prompt is a request. A model that decides the rule doesn't apply will act, and you find out afterwards.</p>
+          <p><strong>The solve:</strong> every constraint that matters lives in <code style="font-family:var(--mono);font-size:0.88em">canUseTool</code>, which runs before the tool does. Writes outside the report file are denied. Bash is allowlisted per chained segment. Denials return a <em>reason</em>, so the model adapts instead of retrying blindly.</p>
+          <p><strong>The tradeoff:</strong> the allowlist is conservative, so occasionally the agent can't run a command it would have found useful. It routes around with Read and Grep. I'd rather it be mildly inconvenienced than mildly destructive.</p>
+        </div>
+
+        <div class="card card-gate is-permit">
+          <h3 class="h3">Licence classification before analysis</h3>
+          <p><strong>The problem:</strong> "port this pattern" is fine for MIT and a licensing problem for AGPL. Deciding afterwards is too late — by then the model has already written the description.</p>
+          <p><strong>The solve:</strong> read <code style="font-family:var(--mono);font-size:0.88em">LICENSE</code> immediately after cloning, classify it into permissive / copyleft / unlicensed, and turn that into a policy sentence injected into the system prompt. No licence file is treated as the strictest case, not the loosest — all rights reserved by default.</p>
+        </div>
+
+        <div class="card card-gate">
+          <h3 class="h3">Post-hoc correction of facts the programme owns</h3>
+          <p><strong>The problem:</strong> the first real run stamped the report <code style="font-family:var(--mono);font-size:0.88em">2025-01-21</code>, ignoring the correct date interpolated into its own prompt.</p>
+          <p><strong>The solve:</strong> the licence and date lines are rewritten in code after generation. It's a small module, and it encodes a rule I now apply everywhere — if the programme can know something, the programme decides it. Don't ask a model to carry a fact you already hold.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">Stack</p>
+        <h2 class="h2">Why each piece</h2>
+      </div>
+      <div class="col" style="margin-top: 24px;">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th scope="col">Piece</th><th scope="col">Why this one</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>@anthropic-ai/claude-agent-sdk</code></td><td>Ships the agent loop, the tool set, and — critically — a permission callback. The rails exist because the SDK exposes that hook.</td></tr>
+              <tr><td><code>TypeScript</code> (strict, NodeNext)</td><td>The SDK's union types do real work here. Narrowing <code>SDKMessage</code> by <code>type</code> catches mistakes the docs wouldn't have.</td></tr>
+              <tr><td><code>commander</code></td><td>Two subcommands with flags. Anything heavier would be furniture.</td></tr>
+              <tr><td><code>picocolors</code></td><td>Terminal colour in ~2 kB. The output is the interface, so it needed to read well.</td></tr>
+              <tr><td><code>node:test</code></td><td>Built in. The guards are pure functions, so the suite needs no API key and no mocking framework.</td></tr>
+              <tr><td><code>git</code> (shallow clone)</td><td><code>--depth 1</code> into the temp directory. Fast, and structurally incapable of landing in your history.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="col prose">
+        <p class="eyebrow">Honest limits</p>
+        <h2 class="h2">What it doesn't do</h2>
+      </div>
+      <div class="col" style="margin-top: 22px;">
+        <ul class="checks">
+          <li>Single-shot. It doesn't watch the repo or re-run on changes.</li>
+          <li>Shallow clone means findings reflect the reference's current <code style="font-family:var(--mono);font-size:0.88em">HEAD</code>, not its history or its reasoning.</li>
+          <li>Quality of the report tracks quality of the goal you give it. A vague goal gets a vague report — the scoring has nothing to score against.</li>
+          <li>Bash allowlisting is deliberately conservative and will occasionally be annoying.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="col">
+        <p class="eyebrow">Links</p>
+        <h2 class="h2">Go read the code</h2>
+        <p class="lede" style="margin-bottom: 26px;">
+          The interesting file is <code style="font-family:var(--mono);font-size:0.9em;color:var(--accent-ink)">src/guard.ts</code>. It's about a hundred lines and it's the whole argument.
+        </p>
+        <div class="hero-actions" style="margin-bottom: 34px;">
+          <a class="btn btn-primary" href="https://github.com/charanreddy-27/repo-gap-analysis">GitHub repo</a>
+          <!-- TODO: replace with the LinkedIn post URL once published -->
+          <a class="btn" href="https://www.linkedin.com/in/chandacharanreddy/">LinkedIn post</a>
+        </div>
+
+        <h2 class="h2">Want to build something, or collaborate?</h2>
+        <p class="lede" style="margin-bottom: 24px;">
+          Want to build something — or break something interesting? Let's talk.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://cal.com/charanreddy-27/30min">Book a call</a>
+          <a class="btn" href="mailto:charanreddychanda@gmail.com">Email</a>
+          <a class="btn" href="about.html">More about me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div>Crafted with intent. <span class="mono" style="color: var(--permit);">Available for new projects.</span></div>
+      <div class="mono" style="margin-top: 4px;">Charan Reddy Chanda · Bangalore</div>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.charanreddy.dev">Portfolio</a>
+      <a href="https://github.com/charanreddy-27">GitHub</a>
+      <a href="https://www.linkedin.com/in/chandacharanreddy/">LinkedIn</a>
+      <a href="https://cal.com/charanreddy-27/30min">Book a call</a>
+      <a href="https://orcid.org/0009-0003-2414-6717">ORCID</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="theme.js"></script>
+</body>
+</html>

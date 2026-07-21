@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse">
+      <path d="M52 0H0V52" fill="none" stroke="#92a6ba" stroke-opacity="0.10" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="gridmask">
+      <rect width="1200" height="630" fill="url(#fade)"/>
+    </mask>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0a1014"/>
+  <g mask="url(#gridmask)"><rect width="1200" height="630" fill="url(#grid)"/></g>
+
+  <!-- mark -->
+  <g transform="translate(84 78)">
+    <rect x="0.9" y="0.9" width="42" height="42" rx="10" fill="none" stroke="#8b8ef0" stroke-opacity="0.45" stroke-width="1.8"/>
+    <path d="M11 22h7.5" stroke="#4caf6d" stroke-width="3.4" stroke-linecap="round"/>
+    <path d="M25 16l6 6-6 6" stroke="#8b8ef0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="142" y="108" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="27" font-weight="600" fill="#e7eef5" letter-spacing="-0.5">repo<tspan fill="#a8abf7">gap</tspan></text>
+
+  <!-- headline -->
+  <text x="84" y="268" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="82" font-weight="600" fill="#e7eef5" letter-spacing="-3.2">The agent that</text>
+  <text x="84" y="358" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="82" font-weight="600" fill="#e7eef5" letter-spacing="-3.2">says <tspan fill="#a8abf7">skip</tspan>.</text>
+
+  <text x="84" y="422" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="25" fill="#94a6b8">Audits your repo against one you admire, then implements</text>
+  <text x="84" y="458" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="25" fill="#94a6b8">what you approve — one commit each.</text>
+
+  <!-- verdict chips: the product's actual vocabulary -->
+  <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="19">
+    <rect x="84" y="512" width="152" height="42" rx="8" fill="none" stroke="#4caf6d" stroke-opacity="0.55"/>
+    <text x="106" y="539" fill="#4caf6d">✓ ADOPT · 6</text>
+    <rect x="252" y="512" width="140" height="42" rx="8" fill="none" stroke="#5f7386" stroke-opacity="0.55"/>
+    <text x="274" y="539" fill="#8b9bab">— SKIP · 10</text>
+    <rect x="408" y="512" width="196" height="42" rx="8" fill="none" stroke="#e0605a" stroke-opacity="0.5"/>
+    <text x="430" y="539" fill="#e0605a">⛔ WRITE DENIED</text>
+  </g>
+
+  <text x="1116" y="566" text-anchor="end" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="21" fill="#5f7386">charanreddy.dev</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="7" fill="#0a1014"/>
+  <rect x="1.5" y="1.5" width="29" height="29" rx="6" fill="none" stroke="#8b8ef0" stroke-opacity="0.35"/>
+  <!-- the gate: a permitted bar, then a denied arrow turned back -->
+  <path d="M8 16h5.5" stroke="#4caf6d" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M18 12l4.5 4-4.5 4" stroke="#8b8ef0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
