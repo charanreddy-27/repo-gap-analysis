@@ -175,7 +175,8 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
    section instead of trailing off into whitespace. */
 .sec-head {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  /* The heading is monospaced and therefore wide — it gets the larger share. */
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.85fr);
   gap: 8px 56px;
   align-items: end;
   margin-bottom: 30px;
@@ -566,11 +567,14 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
   margin-top: 12px;
 }
 
-/* full-bleed break-out for terminals inside the report column */
+/* Full-width terminal container. As a direct child of <main> it applies the
+   page gutter itself; nested inside .wrap the gutter is already there, and
+   counting it twice indents the block relative to its neighbours. */
 .bleed {
   width: min(100% - (var(--pad) * 2), 1180px);
   margin-inline: auto;
 }
+.wrap .bleed { width: 100%; max-width: none; }
 
 /* ---------- verdict / gate cards ---------- */
 .grid {
