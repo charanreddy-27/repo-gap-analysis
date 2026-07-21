@@ -417,6 +417,132 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 }
 @keyframes blink { 50% { opacity: 0; } }
 
+/* ---------- hero replay ----------
+   Lines are present in the DOM and fully visible by default; the reveal only
+   applies once JS adds .is-animated, so no-JS and reduced-motion see the whole
+   session immediately. */
+.term-body .ln { display: block; min-height: 1.75em; }
+.term-body.is-animated .ln { opacity: 0; transform: translateY(3px); }
+.term-body.is-animated .ln.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+.term-actions { display: flex; gap: 8px; margin-left: auto; }
+.term-btn {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: #8fa2b6;
+  background: transparent;
+  border: 1px solid rgba(146, 166, 186, 0.22);
+  border-radius: 5px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.term-btn:hover { color: #e7eef5; border-color: rgba(146, 166, 186, 0.45); }
+
+/* ---------- guard playground ---------- */
+.play {
+  background: var(--panel-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.75);
+}
+.play-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(146, 166, 186, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+}
+.play-title {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
+  color: #8fa2b6;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 7px; padding: 13px 14px 0; }
+.chip {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: #b9c8d8;
+  background: rgba(139, 142, 240, 0.1);
+  border: 1px solid rgba(139, 142, 240, 0.3);
+  border-radius: 5px;
+  padding: 4px 9px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.chip:hover { background: rgba(139, 142, 240, 0.2); border-color: var(--accent); color: #fff; }
+.chip.is-bad { background: rgba(224, 96, 90, 0.1); border-color: rgba(224, 96, 90, 0.34); }
+.chip.is-bad:hover { background: rgba(224, 96, 90, 0.2); border-color: var(--deny); }
+
+.play-out {
+  margin: 0;
+  padding: 14px;
+  min-height: 150px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #c6d4e2;
+}
+.g-row { padding: 7px 0; border-bottom: 1px solid rgba(146, 166, 186, 0.09); }
+.g-row:last-child { border-bottom: 0; }
+.g-cmd { color: #e7eef5; overflow-wrap: anywhere; }
+.g-prompt { color: var(--accent-ink); }
+.g-allow { color: var(--permit); overflow-wrap: anywhere; }
+.g-deny { color: var(--deny); overflow-wrap: anywhere; }
+.play-out .dim { color: #6c8095; }
+
+.play-form {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(146, 166, 186, 0.14);
+  background: rgba(255, 255, 255, 0.015);
+}
+.play-form input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: #e7eef5;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(146, 166, 186, 0.22);
+  border-radius: var(--r-sm);
+  padding: 9px 12px;
+}
+.play-form input::placeholder { color: #5f7386; }
+.play-form input:focus { border-color: var(--accent); }
+.play-form button {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: #0a0d16;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-sm);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.play-form button:hover { background: var(--accent-ink); }
+
+.play-note {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: 12px;
+}
+
 /* full-bleed break-out for terminals inside the report column */
 .bleed {
   width: min(100% - (var(--pad) * 2), 1120px);
@@ -644,6 +770,18 @@ td code {
 .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
 .footer-links a { color: var(--muted); text-decoration: none; }
 .footer-links a:hover { color: var(--accent-ink); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
 
 .skip-link {
   position: absolute;

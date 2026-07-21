@@ -41,9 +41,16 @@ test('phase 1 narrows bash to read-only commands', async () => {
 
 test('phase 1 inspects every segment of a chained command', async () => {
   const guard = analysisGuard(REPORT);
-  // A read-only prefix must not launder a destructive suffix.
+  // These reach the segment check: neither suffix is on the always-denied
+  // list, so the only thing refusing them is the per-segment allowlist.
+  assert.equal(await decide(guard, 'Bash', { command: 'ls && npm install left-pad' }), 'deny');
+  assert.equal(await decide(guard, 'Bash', { command: 'git log | tee out.txt' }), 'deny');
+  // A permitted prefix must not launder a destructive suffix either. These are
+  // caught earlier, by the always-denied list, whatever the chaining.
   assert.equal(await decide(guard, 'Bash', { command: 'ls && rm -rf src' }), 'deny');
   assert.equal(await decide(guard, 'Bash', { command: 'cat a.txt; git push' }), 'deny');
+  // Every segment permitted → allowed.
+  assert.equal(await decide(guard, 'Bash', { command: 'ls && git log' }), 'allow');
 });
 
 test('phase 2 confines writes to the target repo', async () => {

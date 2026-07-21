@@ -147,7 +147,22 @@ const offending = segments.find(
 );
 ```
 
-That case is now `test/guard.test.js` case three.
+**A note on testing the right thing.** The obvious test case for this is
+`ls && rm -rf src` — but it never reaches the segment check. `rm -rf` is on the
+always-denied list, which is matched against the raw string first, so the command is refused
+one layer earlier. The test passed while exercising nothing.
+
+The case that actually proves segment-splitting works is one where the suffix is merely
+*not permitted* rather than outright destructive:
+
+```
+ls && npm install left-pad     → denied: not a read-only command: npm install left-pad
+git log | tee out.txt          → denied: not a read-only command: tee out.txt
+ls && git log                  → allowed: every segment clears the allowlist
+```
+
+`test/guard.test.js` case three now covers both layers, and asserts the all-permitted case
+is still allowed so the rule can't pass by denying everything.
 
 ### Phase 2 uses a different rail, not no rail
 
